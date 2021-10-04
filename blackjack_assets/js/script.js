@@ -1,3 +1,5 @@
+const { Fade } = require("react-bootstrap")
+
 let blackjackGame = {
     'you': { 'scoreSpan': '#player-blackjack-score', 'div': '#player-box', 'score': 0},
     'dealer': { 'scoreSpan': '#dealer-blackjack-score', 'div': '#dealer-box', 'score': 0 },
@@ -6,6 +8,8 @@ let blackjackGame = {
     'wins': 0,
     'losses': 0,
     'draws': 0,
+    'isStand': false,
+    'turnsOver': false,
 }
 
 const YOU = blackjackGame['you']
@@ -19,10 +23,12 @@ document.querySelector('#deal-button').addEventListener('click', blackjackDeal)
 document.querySelector("#stand-button").addEventListener('click', dealerLogic)
 
 function blackjackHit() {
-    let card = randomCard()
-    showCard(card, YOU)
-    updateScore(card, YOU)
-    showScore(YOU)
+    if (blackjackGame['isStand'] === false) {
+        let card = randomCard()
+        showCard(card, YOU)
+        updateScore(card, YOU)
+        showScore(YOU)
+    }
 }
 
 function randomCard() {
@@ -60,7 +66,6 @@ function blackjackDeal() {
     document.querySelector('#dealer-blackjack-score').style.color = "white"
     document.querySelector('#blackjack-result').textContent = "Let's Play"
     document.querySelector('#blackjack-result').style.color = "black"
-
 }
 
 function updateScore(card, activePlayer) {
@@ -85,12 +90,14 @@ function showScore(activePlayer) {
 }
 
 function dealerLogic() {
+    blackjackGame['isStand'] = true
     let card = randomCard()
     showCard(card, DEALER)
     updateScore(card, DEALER)
     showScore(DEALER)
 
     if (DEALER['score'] > 15) {
+        blackjackGame['turnsOver'] = true
         let winner = calculateWinner()
         showResult(winner)
     }
