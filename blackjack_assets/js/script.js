@@ -58,6 +58,8 @@ function blackjackDeal() {
     document.querySelector('#dealer-blackjack-score').textContent = 0;
     document.querySelector('#player-blackjack-score').style.color = "white"
     document.querySelector('#dealer-blackjack-score').style.color = "white"
+    document.querySelector('#blackjack-result').textContent = "Let's Play"
+    document.querySelector('#blackjack-result').style.color = "black"
 
 }
 
